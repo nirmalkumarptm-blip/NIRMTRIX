@@ -1,0 +1,2 @@
+{ "identifier": "default", "windows": ["main", "alarm-*"],
+  "permissions": ["core:default", "notification:default", "autostart:allow-enable", "autostart:allow-disable", "autostart:allow-is-enabled"] }
