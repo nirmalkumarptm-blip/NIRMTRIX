@@ -1,0 +1,13 @@
+{
+  "name": "nirmtrix", "version": "0.1.0", "private": true, "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --experimental-strip-types --no-warnings --test packages/core/test/*.test.ts && node --experimental-strip-types --no-warnings scripts/test-ui.ts",
+    "build:web": "node scripts/build-web.mjs",
+    "android:init": "npm run build:web && npx cap add android && node scripts/android-prepare.mjs && npx cap sync android",
+    "android:sync": "npm run build:web && node scripts/android-prepare.mjs && npx cap sync android",
+    "android:debug-apk": "cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": { "@capacitor/android": "^8.0.0", "@capacitor/core": "^8.0.0" },
+  "devDependencies": { "@capacitor/cli": "^8.0.0" }
+}
