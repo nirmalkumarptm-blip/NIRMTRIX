@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>NIRMTRIX alarm</title><style>
+body{margin:0;background:#000;color:#e8ffe8;font:16px system-ui;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:14px}
+svg{width:200px;height:200px}.r{transform-origin:center;animation:s 6s linear infinite}@keyframes s{to{transform:rotate(360deg)}}
+h1{margin:0;color:#39ff14;text-shadow:0 0 12px #39ff14}.b{display:flex;gap:10px}button{background:#121a12;color:#e8ffe8;border:1px solid #39ff14;border-radius:12px;padding:12px 18px;font:inherit;cursor:pointer}button.p{background:#39ff14;color:#021002;font-weight:700}
+@media (prefers-reduced-motion:reduce){.r{animation:none}}</style></head><body>
+<svg viewBox="0 0 200 200"><g class="r"><circle cx="100" cy="100" r="90" fill="none" stroke="#39ff14" stroke-width="4" stroke-dasharray="60 14"/></g><path d="M72 130V70l56 60V70" fill="none" stroke="#39ff14" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<h1 id="t"></h1><div id="n"></div><div class="b" id="b"></div>
+<script>
+const A=window.__ALARM||{title:"Alarm",id:""};document.getElementById("t").textContent=A.title;document.getElementById("n").textContent=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+const inv=(a,m)=>window.__TAURI__.core.invoke("alarm_action",{id:A.id,action:a,minutes:m});
+const mk=(l,f,c)=>{const e=document.createElement("button");e.textContent=l;e.className=c||"";e.onclick=f;document.getElementById("b").append(e)};
+mk("Snooze 10 min",()=>inv("snooze",10));mk("Dismiss",()=>inv("dismiss"));if(!A.recurring)mk("Complete",()=>inv("complete"),"p");
+/* original synthesized tone (no audio assets); stops when the window closes */
+try{const c=new AudioContext(),g=c.createGain();g.gain.value=.15;g.connect(c.destination);let k=0;setInterval(()=>{const o=c.createOscillator();o.frequency.value=k++%2?880:660;o.connect(g);o.start();o.stop(c.currentTime+.25)},500)}catch(e){}
+</script></body></html>
